@@ -1,0 +1,43 @@
+var RANGE_PLAYER1 = 'FirstPlayer';
+var SHEET_PLAYERS = 'Players';
+var SHEET_BRACKETS = 'Brackets';
+var CONNECTOR_WIDTH = 15;        // The value must be N-1 where N = Total number of teams
+
+function openMenu() {
+      var ss = SpreadsheetApp.getActiveSpreadsheet();
+      ss.addMenu('Brackets Maker',[{name: 'Create Brackets', functionName: 'createBrackets';}]
+      }
+
+function createBrackets(){
+      var ss = SpreadsheetApp.getActiveSpreadsheet();
+      var rangePlayers = ss.getRangeByName(PLAYER_1);
+      var sheetControl = ss.getRangeByName(SHEET_PLAYERS);
+      var sheetResults = ss.getRangeByName(SHEET_BRACKETS);
+      
+      rangePlayers = players.offset(0,0,sheetControl.getMaxRows() - players.getRowIndex() + 1, 1);
+      var players = rangePlayers.getValues();
+      
+      var numPlayers = 0;
+      for (var i=0; i<players.length; i++){
+            if(!players[i][0] || players[i][0].length == 0) {
+                break;
+            }
+         numPlayers++;
+     
+     players = players.slice(0, numPlayers);
+     
+     // Throws an error if the number of players/teams is more than 512
+     if (numPlayers > 512) {
+          Broswer.msgBox('Sorry, the limit of entries is restricted to 512 only');
+          return;
+          }
+     
+     sheetResults.clear()
+     
+     var upperPower = Math.ceil(Math.log(numPlayers) / Math.log(2));
+     var countNodesUpperBound = Math.pow(2, upperPower);
+     var countNodesLowerBound = countNodesUpperBound/2;
+     var countNodesHidden = numPlayers - countNodesLowerBound
+     
+     var currentPLayer = 0;
+     for (var i=0; i< countNodesLowerBound
